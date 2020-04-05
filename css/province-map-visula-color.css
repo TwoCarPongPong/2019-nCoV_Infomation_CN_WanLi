@@ -1,0 +1,33 @@
+/* 设置8个visual的颜色 */
+/* color: ['#e2ebf4',#ffe7b8','#ffdab3', '#ffc89e', '#ffaa80', '#ff704f','#f04141', '#cc1e1e'] */
+.visual li:nth-child(1) .rectangle {
+	background-color: #cc1e1e;
+}
+
+.visual li:nth-child(2) .rectangle {
+	background-color: #f04141;
+}
+
+.visual li:nth-child(3) .rectangle {
+	background-color: #ff704f;
+}
+
+.visual li:nth-child(4) .rectangle {
+	background-color: #ffaa80;
+}
+
+.visual li:nth-child(5) .rectangle {
+	background-color: #ffc89e;
+}
+
+.visual li:nth-child(6) .rectangle {
+	background-color: #ffdab3;
+}
+
+.visual li:nth-child(8) .rectangle {
+	background-color: #ffe7b8;
+}
+
+.visual li:nth-child(9) .rectangle {
+	background-color: #e2ebf4;
+}

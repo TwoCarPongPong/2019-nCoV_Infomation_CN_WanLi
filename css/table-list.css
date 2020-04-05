@@ -1,0 +1,106 @@
+/* 列表相关样式 */
+/* 基本样式 */
+.china-list {
+	width: 666px;
+	margin: 20px 42px 0;
+	font-size: 25px;
+	table-layout: fixed;
+	border-collapse: collapse;
+}
+
+.china-list tr {
+	height: 80px;
+	vertical-align: center;
+	box-sizing: border-box;
+}
+
+.china-list thead th {
+	font-weight: normal;
+}
+
+.china-list .area{
+	text-align: left;
+	padding-left: 25px;
+	box-sizing: border-box;
+	position: relative;
+}
+
+.china-list td {
+	text-align: center;
+}
+
+.china-list .areaBox {
+	display: table-row;
+	font-size: 30px;
+	color: #000000;
+}
+.china-list tbody tr{
+	display: none;
+}
+/* 字体颜色 表格下边框 表头格背景颜色 伪类*/
+.china-list a {
+	color: #005DEF;
+	text-decoration: none;
+}
+
+.china-list tbody {
+	color: #737373;
+}
+
+.china-list tbody td,
+.china-list tbody th {
+	border-bottom: 1px solid #f5f5f5;
+}
+
+.china-list thead th:nth-child(1) {
+	color: #222;
+	background-color: #f5f5f5;
+}
+
+.china-list thead th:nth-child(2) {
+	color: #FF5D00;
+	background-color: #fcf2e8;
+}
+
+.china-list thead th:nth-child(3) {
+	color: #f55253;
+	background-color: #fdeeee;
+}
+
+.china-list thead th:nth-child(4) {
+	color: #178B50;
+	background-color: #e9f7ec;
+}
+
+.china-list thead th:nth-child(5) {
+	color: #4E5A65;
+	background-color: #F3F6F8;
+}
+
+.china-list thead th:nth-child(6) {
+	color: #222;
+	background-color: #F5F5F5;
+}
+
+/* 地区前的小三角 */
+.china-list .areaBox .area::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 20px;
+	/* 4:3*/
+	height: 15px;
+	background: url(../png/area_down.png) no-repeat;
+	background-size: 100%;
+}
+/* 展开表格样式 */
+.china-list tbody tr.current ~ tr{
+	display: table-row;
+}
+.china-list .areaBox.current .area::before{
+	background-image: url(../png/area_top.png);
+	/* background-size: 100%; */
+}
+

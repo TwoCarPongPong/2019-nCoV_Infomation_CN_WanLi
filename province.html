@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<!-- 引入ico图标 -->
+	<link rel="icon" href="png/万.jpg" type="image/jpg">
+	<!-- js文件 -->
+	<script src="js/autoscale.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-3.4.1.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/echarts-4.1.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/provinceDic.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" charset="utf-8">
+		let url = window.location.href;
+		var province = decodeURI(url.split("=")[1] || "湖北");
+		// 设置标题
+		let titleStr = province + "疫情动态";
+		let title = document.createElement("title");
+		title.innerText = titleStr;
+		$("head")[0].appendChild(title);
+		// 动态引入地图JS文件
+		let mapScript = document.createElement("script");
+		var srcStr = "province/" + provinceDic[province] + ".js";
+		mapScript.setAttribute("src", srcStr);
+		mapScript.setAttribute("type", "text/javascript");
+		mapScript.setAttribute("charset", "utf-8");
+		// 找到province.js文件的script标签的位置
+		let indexJs = document.querySelector("#indexJs");
+		// 将引入的地图文件置于province.js前
+		document.getElementsByTagName("head")[0].insertBefore(mapScript, indexJs);
+	</script>
+	<script src="js/province.js" type="text/javascript" charset="utf-8" id="indexJs"></script>
+	<!-- css样式 -->
+	<link rel="stylesheet" type="text/css" href="css/data-list-color.css" />
+	<link rel="stylesheet" type="text/css" href="css/province-map-visula-color.css" />
+	<link rel="stylesheet" type="text/css" href="css/province-charts.css" />
+	<link rel="stylesheet" href="css/charts-visual-color.css">
+	<link rel="stylesheet" type="text/css" href="css/table-list.css" />
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			user-select: none;
+		}
+
+		a {
+			text-decoration: none;
+		}
+
+		/* 外部容器 */
+		.box {
+			width: 750px;
+			margin: 0 auto;
+			padding-bottom: 30px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			box-shadow: 0 -5px 8px rgba(0, 0, 0, .3)
+		}
+
+		/* 顶部容器 */
+		.header {
+			width: 750px;
+			height: 334px;
+			background: url(png/head.png) no-repeat;
+		}
+
+		/* 主要内容容器 */
+		.main {
+			background-color: #FFFFFF;
+			margin-top: -30px;
+			position: relative;
+		}
+
+		/* 主要容器顶部圆角矩形 */
+		.main .topBar {
+			width: 100%;
+			height: 85px;
+			line-height: 85px;
+			background-color: #FFFFFF;
+			border-radius: 20px 20px 0 0;
+			position: relative;
+			top: -30px;
+			display: flex;
+		}
+
+		.topBar a {
+			display: block;
+			width: 375px;
+			background-color: #DDECFF;
+			color: #445063;
+			font-size: 37px;
+			text-align: center;
+		}
+
+		.topBar a:nth-child(1) {
+			border-top-left-radius: 25px;
+		}
+
+		.topBar a:nth-child(2) {
+			border-top-right-radius: 25px;
+		}
+
+		.topBar a.current {
+			background-color: #FFFFFF;
+			color: #005DFF;
+		}
+
+		.topBar a.current::before {
+			content: "";
+			display: block;
+			position: absolute;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 85px;
+			height: 100%;
+			background: url(png/tab_current_r.png) no-repeat;
+			background-size: 100%;
+			z-index: 1;
+		}
+
+		/* 一览表容器 */
+		.data-view {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			color: #222222;
+			font-size: 16px;
+		}
+
+		/* 上次更新时间样式 */
+		.lastUpdateTime {
+			width: 670px;
+			height: 50px;
+			line-height: 50px;
+			color: #737373;
+			font-size: 22px;
+		}
+
+		.lastUpdateTime span {
+			color: #222222;
+		}
+
+		/* 一览表样式 */
+		.data-list {
+			width: 670px;
+			height: 160px;
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.data-list>li {
+			width: 164px;
+			height: 160px;
+			font-size: 25px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			color: #222222;
+		}
+
+		/* 设置一览表圆角 */
+		.data-list>li:nth-child(1) {
+			border-top-left-radius: 20px;
+			border-bottom-left-radius: 20px;
+		}
+
+		.data-list>li:nth-child(4) {
+			border-top-right-radius: 20px;
+			border-bottom-right-radius: 20px;
+		}
+
+		/* 一览表内文字样式 */
+		.data-list li>span {
+			font-size: 22px;
+			color: #7C7C7C;
+		}
+
+		.data-list .ChinaTotal {
+			font-size: 44px;
+			margin: 5px 0;
+			font-weight: bold;
+		}
+
+		/* 地图容器 */
+		.map {
+			margin-top: 20px;
+			width: 750px;
+			height: 700px;
+		}
+
+		.visualMap {
+			width: 670px;
+			margin: 20px auto 0;
+		}
+
+		.visual {
+			height: 105px;
+			display: flex;
+			flex-direction: column;
+			flex-wrap: wrap;
+			justify-content: space-between;
+		}
+
+		.visual>li {
+			height: 35px;
+			line-height: 35px;
+			font-size: 24px;
+			color: #222222;
+			/* box-sizing: border-box; */
+			display: flex;
+		}
+
+		.visual .rectangle {
+			width: 15px;
+			height: 33px;
+			margin-right: 15px;
+		}
+
+		/* 切换地图按钮样式 */
+		.switchConfirm {
+			margin: 30px auto 0;
+			width: 650px;
+			height: 60px;
+			line-height: 60px;
+			background-color: #fdf1f1;
+			color: #191919;
+			border-radius: 10px;
+			position: relative;
+			z-index: 2;
+			transition: all .5s;
+		}
+
+		.switchConfirm .text {
+			width: 100%;
+			display: flex;
+		}
+
+		.switchConfirm .text>span {
+			position: relative;
+			width: 50%;
+			text-align: center;
+			z-index: 1;
+			background-color: transparent;
+			/* font-weight: bold; */
+			font-size: 25px;
+		}
+
+		.switchConfirm .moveBlock {
+			position: absolute;
+			top: 0;
+			left: 0%;
+			width: 50%;
+			height: 100%;
+			border-radius: 10px;
+			background-color: #FFFFFF;
+			transform: scale(.97, .8);
+			transition: all .5s;
+		}
+
+		.switchConfirm.active {
+			background-color: #e4f8ee;
+		}
+
+		.switchConfirm.active .moveBlock {
+			left: 50%;
+		}
+
+		.china-list-wapper .china-list .newConfirm {
+			color: #005DEF;
+			background-color: #e8effc;
+		}
+
+		.china-list-wapper {
+			padding-top: 40px;
+		}
+
+		/* 列表标题样式 */
+		.china-list-wapper .title {
+			padding-left: 42px;
+		}
+
+		.china-list-wapper h1 {
+			font-size: 35px;
+		}
+
+		.china-list-wapper .tip {
+			color: #424242;
+			font-size: 23px;
+		}
+
+		/* 底部样式 */
+		.box>.bottom {
+			width: 100%;
+			height: 30px;
+			line-height: 30px;
+			font-size: 25px;
+			padding: 80px 0px 20px;
+			color: #737373;
+			text-align: center;
+		}
+
+		.china-list tbody tr {
+			display: table-row;
+			color: #222222;
+		}
+
+		.china-list tbody .area {
+			font-weight: normal;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="box">
+		<!-- 顶部图片容器 -->
+		<div class="header"></div>
+		<div class="main">
+			<!-- 顶部弧形装饰容器 -->
+			<div class="topBar">
+				<a class="china">全国疫情</a>
+				<a class="province current"><span class="provinceName"></span>疫情</a>
+			</div>
+			<!-- 一览表容器 -->
+			<div class="data-view">
+				<div class="lastUpdateTime">
+					统计截至<span class="time">2020-03-21 16:56:16</span>
+				</div>
+				<ul class="data-list">
+					<li class="nowConfirm-list">
+						<span class="ChinaAdd">
+							较上日<span class="add"></span>
+						</span>
+						<span class="ChinaTotal"></span>
+						现有确诊
+					</li>
+					<li class="confirm-list">
+						<span class="ChinaAdd">
+							较上日<span class="add"></span>
+						</span>
+						<span class="ChinaTotal"></span>
+						累计确诊
+					</li>
+					<li class="heal-list">
+						<span class="ChinaAdd">
+							较上日<span class="add"></span>
+						</span>
+						<span class="ChinaTotal"></span>
+						累计治愈
+					</li>
+					<li class="dead-list">
+						<span class="ChinaAdd">
+							较上日<span class="add"></span>
+						</span>
+						<span class="ChinaTotal"></span>
+						累计死亡
+					</li>
+				</ul>
+			</div>
+			<!-- 地图外容器 -->
+			<div class="map-wapper">
+				<!-- 地图切换按钮 -->
+				<div class="switchConfirm active">
+					<div class="text">
+						<span>累计确诊</span>
+						<span>现有确诊</span>
+					</div>
+					<div class="moveBlock"></div>
+				</div>
+				<div class="map"></div>
+				<div class="visualMap">
+					<ul class="visual">
+						<li>
+							<div class="rectangle"></div>
+							<span>10000人及以上</span>
+						</li>
+						<li>
+							<div class="rectangle"></div>
+							<span>1000-9999人</span>
+						</li>
+						<li>
+							<div class="rectangle"></div>
+							<span>500-999人</span>
+						</li>
+						<li>
+							<div class="rectangle"></div>
+							<span>100-499人</span>
+						</li>
+						<li>
+							<div class="rectangle"></div>
+							<span>50-99人</span>
+						</li>
+						<li>
+							<div class="rectangle"></div>
+							<span>10-49人</span>
+						</li>
+						<li></li>
+						<li>
+							<div class="rectangle"></div>
+							<span>1-9人</span>
+						</li>
+						<li>
+							<div class="rectangle"></div>
+							<span>0人</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!-- 图表部分 -->
+			<div class="china-charts-box">
+				<ul class="data-charts-wapper">
+					<li class="add-chart-box">
+						<h1><span class="provinceName"></span>疫情新增趋势</h1>
+						<div class="visuals">
+							<span class="new-confirm">新增确诊</span>
+							<span class="heal">新增治愈</span>
+							<span class="dead">新增死亡</span>
+						</div>
+						<div class="line-chart"></div>
+					</li>
+					<li class="CASAI-chart-box">
+						<h1><span class="provinceName"></span>疫情确诊/疑似/重症趋势</h1>
+						<div class="visuals">
+							<span class="now-confirm">现有确诊</span>
+							<span class="confirm">累计确诊</span>
+							<span class="heal">累计治愈</span>
+							<span class="dead">累计死亡</span>
+						</div>
+						<div class="line-chart"></div>
+					</li>
+				</ul>
+				<div class="button-box">
+					<span class="active add-chart-button"><span class="provinceName"></span>疫情<br />新增趋势</span>
+					<span class="CASAI-chart-button"><span class="provinceName"></span>疫情<br />累计趋势</span>
+				</div>
+			</div>
+			<!-- 省疫情列表 -->
+			<div class="china-list-wapper">
+				<div class="title">
+					<h1><span class="provinceName"></span>疫情数据</h1>
+					<span class="tip">7:00-10:00为更新高峰，数据如有滞后请谅解。</span>
+				</div>
+				<table class="china-list" width="100%">
+					<thead>
+						<tr>
+							<th class="area" width="165px">地区</th>
+							<th class="newConfirm" width="142px">新增确诊</th>
+							<th class="confirm" width="142px">累计确诊</th>
+							<th class="heal" width="104px">治愈</th>
+							<th class="heal" width="115px">死亡</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+		<div class="bottom">
+			<span>本页面引用腾讯接口,前端技术支持完成:万里</span>
+		</div>
+	</div>
+</body>
+
+</html>

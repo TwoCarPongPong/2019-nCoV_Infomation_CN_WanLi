@@ -1,0 +1,83 @@
+.china-charts-box {
+	padding-top: 40px;
+}
+
+.data-charts-wapper {
+	overflow: hidden;
+	display: flex;
+}
+
+.data-charts-wapper li{
+	width: 650px;
+	height: 483px;
+	padding: 40px 0px 0 30px;
+	margin-left: 42px;
+	border: 1px solid #efefef;
+	border-radius: 15px;
+	box-sizing: border-box;
+	flex-shrink: 0;
+	user-select: none;
+	transition: margin-left .3s;
+}
+
+.data-charts-wapper>li>h1,.data-charts-wapper>li>h1>span{
+	font-size: 35px;
+	font-weight: bold;
+	color: #222222;
+	margin: 0;
+}
+.data-charts-wapper .visuals {
+	line-height: 20px;
+	display: flex;
+}
+
+.data-charts-wapper li span {
+	margin: 10px 15px 10px 0;
+	font-size: 21px;
+	color: #737373;
+}
+
+/* 给映射表文字前添加小方块 */
+.data-charts-wapper .visuals span::before {
+	content: '';
+	float: left;
+	width: 20px;
+	height: 20px;
+	/* background-color: #00008B; */
+	line-height: 20px;
+	margin-right: 5px;
+}
+
+.line-chart {
+	width: 610px;
+	height: 350px;
+}
+
+.button-box {
+	width: 650px;
+	margin-left: 42px;
+	display: flex;
+	margin-top: 20px;
+	justify-content: space-evenly;
+}
+
+/* 设置按钮样式 */
+.button-box>span {
+	display: block;
+	width: 150px;
+	height: 80px;
+	border: 1px solid #EFEFEF;
+	border-radius: 12px;
+	background-color: #F3F6F8;
+	text-align: center;
+	padding-top: 10px;
+	box-sizing: border-box;
+	font-size: 22px;
+	cursor: pointer;
+}
+
+.button-box .active {
+	background-color: #EEF4FF;
+	color: #005DEF;
+	border-color: #8fb8ff;
+}

@@ -1,0 +1,37 @@
+/* 给六个方块上色 */
+		.confirm-list{
+			background-color: #FDF1F1;
+		}
+		.confirm-list .ChinaAdd>span,.confirm-list .ChinaTotal{
+			color:#CC1E1E;
+		}
+		.heal-list{
+			background-color: #F0F8F4;
+		}
+		.heal-list .ChinaAdd>span,.heal-list .ChinaTotal{
+			color:#178b50;
+		}
+		.dead-list{
+			background-color: #F3F6F8;
+		}
+		.dead-list .ChinaAdd>span,.dead-list .ChinaTotal{
+			color:#4E5A65;
+		}
+		.nowConfirm-list{
+			background-color: #FDF1F1;
+		}
+		.nowConfirm-list .ChinaAdd>span,.nowConfirm-list .ChinaTotal{
+			color:#F23A3B;
+		}
+		.nowSevere-list{
+			background-color: #FAF2F6;
+		}
+		.nowSevere-list .ChinaAdd>span,.nowSevere-list .ChinaTotal{
+			color:#CA3F81;
+		}
+		.importedCase-list{
+			background-color: #FCF4F0;
+		}
+		.importedCase-list .ChinaAdd>span,.importedCase-list .ChinaTotal{
+			color:#F05926;
+		}

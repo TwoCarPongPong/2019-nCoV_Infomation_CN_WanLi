@@ -1,0 +1,25 @@
+/* 给映射表上色 */
+			.data-charts-wapper .new-confirm::before{
+				background-color: #f06061;
+			}
+			.data-charts-wapper .new-suspect::before{
+				background-color: #FFD661;
+			}
+			.data-charts-wapper .confirm::before{
+				background-color: #980a0e;
+			}
+			.data-charts-wapper .now-confirm::before{
+				background-color: #FF7B7C;
+			}
+			.data-charts-wapper .now-suspect::before{
+				background-color: #FFD661;
+			}
+			.data-charts-wapper .now-importedCase::before{
+				background-color: #CD73BF;
+			}
+			.data-charts-wapper .heal::before{
+				background-color: #65B379;
+			}
+			.data-charts-wapper .dead::before{
+				background-color: #87878B;
+			}
